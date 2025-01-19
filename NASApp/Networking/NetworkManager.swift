@@ -11,8 +11,7 @@ actor NetworkManager {
     
     private let session: URLSession
     
-    static let shared = NetworkManager()
-    
+    /// Initializes NetworkManager with a cached URLSession configuration
     init() {
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .returnCacheDataElseLoad
