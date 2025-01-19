@@ -7,8 +7,11 @@
 
 import Foundation
 
+/// A thread-safe network manager that handles HTTP requests.
+/// `NetworkManager` provides a shared instance for making HTTP requests and decoding JSON responses.
 actor NetworkManager {
     
+    /// The underlying URLSession configured with caching support
     private let session: URLSession
     
     /// Initializes NetworkManager with a cached URLSession configuration
@@ -18,11 +21,24 @@ actor NetworkManager {
         self.session = URLSession(configuration: config)
     }
     
+    /// Errors that can occur during network operations
     enum NetworkError: Error {
+        /// The provided URL was invalid or nil
         case invalidURL
+        
+        /// The server returned an unexpected response code
         case invalidResponse(Int?)
     }
     
+    /// Fetches and decodes data from a URL
+    ///
+    /// - Parameters:
+    ///   - url: The URL to fetch data from
+    /// - Returns: Decoded object of type T
+    /// - Throws:
+    ///   - `NetworkError.invalidURL` if the URL is nil
+    ///   - `NetworkError.invalidResponse` if the response is invalid or status code is not 2xx
+    ///   - Decoding errors if the response data doesn't match type T
     func fetch<T: Decodable>(_ url: URL?) async throws -> T {
         guard let url else {
             throw NetworkError.invalidURL

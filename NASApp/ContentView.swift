@@ -16,6 +16,14 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        .task {
+            do {
+                let apod = try await APODManager.shared.getApod()
+                print(apod)
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 

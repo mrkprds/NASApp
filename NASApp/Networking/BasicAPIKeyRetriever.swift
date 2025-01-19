@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A basic implementation of APIKeyProvider that returns returns an API Key
 struct BasicAPIKeyRetriever: APIKeyProvider {
     
     func getAPIKey() async throws -> String {
